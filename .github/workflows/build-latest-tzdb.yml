@@ -74,6 +74,7 @@ jobs:
           TZDB_PERMS=`stat -c "%a" $JAVA_HOME/lib/tzdb.dat`
           echo "tzdb_perms=$TZDB_PERMS" >> $GITHUB_OUTPUT
       - name: Run ziupdater and install new TZDB
+        # TODO: Figure out why this is failing
         run: sudo java -jar ziupdater/ziupdater.jar -l file://`pwd`/tzdata${{needs.check.outputs.latest_iana_version}}-rearguard.tar.gz
       - name: Restore TZDB file permissions
         run: sudo chmod ${{steps.perms.outputs.tzdb_perms}} $JAVA_HOME/lib/tzdb.dat
